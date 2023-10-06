@@ -10,6 +10,14 @@ class Api::V1::CustomersControllerTest < ActionDispatch::IntegrationTest
     assert customer.email == 'alice.liddell@gmail.com'
   end
 
+  test "license numbers are unique" do
+    assert !Customer.find_by(first_name: 'Alice', last_name: 'Liddell')
+    Customer.create(first_name: 'Alice', last_name: 'Liddell', license_number: '9KDB90', phone_number: '774-867-5309', email: 'alice.liddell@gmail.com')
+    assert_raise(ActiveRecord::RecordInvalid) do
+      Customer.create!(first_name: 'Alice', last_name: 'Liddell', license_number: '9KDB90', phone_number: '774-867-5309', email: 'alice.liddell@gmail.com')
+    end
+  end
+
   test "customer can be updated" do
     assert !Customer.find_by(first_name: 'Alice', last_name: 'Liddell')
     Customer.create(first_name: 'Alice', last_name: 'Liddell', license_number: '9KDB90', phone_number: '774-867-5309', email: 'alice.liddell@gmail.com')

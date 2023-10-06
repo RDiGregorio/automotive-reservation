@@ -1,7 +1,7 @@
 require "test_helper"
 
 class Api::V1::VehiclesControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  test "vehicle can be created" do
+
+  end
 end

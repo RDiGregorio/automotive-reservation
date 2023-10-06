@@ -1,3 +1,15 @@
+# REQUIREMENTS
+
+This application requires a PostgreSQL database.
+
+# SETUP
+
+TODO
+
+# TESTING
+
+Run `rails test` to run the unit tests for this application.
+
 # README
 
 This README would normally document whatever steps are necessary to get the

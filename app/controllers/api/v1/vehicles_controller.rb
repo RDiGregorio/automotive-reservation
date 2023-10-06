@@ -28,7 +28,7 @@ class Api::V1::VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
     if @vehicle
       @vehicle.update(vehicle_params)
-      render json: { message: 'vehicle updated.' }, status: 200
+      render json: { message: 'Vehicle updated.' }, status: 200
     else
       render json: { error: 'Failed to update vehicle.' }, status: 400
     end
@@ -39,7 +39,7 @@ class Api::V1::VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
     if @vehicle
       @vehicle.destroy
-      render json: { message: 'vehicle deleted.' }, status: 200
+      render json: { message: 'Vehicle deleted.' }, status: 200
     else
       render json: { error: 'Failed to delete vehicle.' }, status: 400
     end

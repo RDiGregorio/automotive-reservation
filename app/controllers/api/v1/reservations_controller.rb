@@ -3,6 +3,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations
   def index
+    #TODO: this probably shouldn't be a child of the vehicle
     @reservations = Reservation.all
     render json: @reservations
   end

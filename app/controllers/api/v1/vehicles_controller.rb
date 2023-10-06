@@ -3,7 +3,7 @@ class Api::V1::VehiclesController < ApplicationController
 
   # GET /vehicles
   def index
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.where(customer_id: params[:customer_id])
     render json: @vehicles
   end
 

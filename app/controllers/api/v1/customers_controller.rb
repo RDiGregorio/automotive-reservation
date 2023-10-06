@@ -1,7 +1,12 @@
 class Api::V1::CustomersController < ApplicationController
   # GET /customers
   def index
-    @customers = Customer.all
+    if params[:first_name] and params[:last_name]
+      @customers = Customer.where(first_name: params[:first_name], last_name: params[:last_name])
+    else
+      @customers = Customer.all
+    end
+
     render json: @customers
   end
 

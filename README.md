@@ -40,4 +40,4 @@ To launch the application, run `rails s`. It will listen at http://127.0.0.1:300
 # TESTING
 
 Run `rails test` to run the unit and integration tests for this application. Tests are stored in the test directory. For
-example, test/controllers/api/v1/scheduling_controller_test.rb.
+example, test/controllers/api/v1/scheduling_controller_test.rb. There are both model and controller tests.

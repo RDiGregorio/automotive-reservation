@@ -13,15 +13,16 @@ class Api::V1::SchedulingController < ApplicationController
         return
       end
 
-      # It's possible for 2 customers to have the same first and last name. If possible we try to narrow it down to
-      # customers that have an open reservation.
+      # It's possible for 2 customers to have the same first and last name. Try to narrow it down to customers that have
+      # an open reservation.
 
-      customers = customers.where { |customer|
+      customers = customers.to_a.select { |customer|
         customer.vehicles.any? { |vehicle|
           vehicle.reservations.any? { |reservation|
-            reservation.status.capitalize != "CLOSED"
+            reservation.status.upcase != "CLOSED"
           }
-        } }
+        }
+      }
 
       if customers.size > 1
         render json: { error: 'Found multiple customers. Please search by license number.' }, status: 400
@@ -32,7 +33,11 @@ class Api::V1::SchedulingController < ApplicationController
       return
     end
 
-    render json: customers.flat_map { |customer| customer.vehicles.flat_map { |vehicle| vehicle.reservations } }
+    reservations = customers.flat_map { |customer| customer.vehicles.flat_map { |vehicle| vehicle.reservations } }
+
+    # We only want open reservations.
+
+    render json: reservations.select { |reservation| reservation.status.upcase != "CLOSED" }
   end
 
   # POST /scheduling

@@ -16,7 +16,7 @@ class Api::V1::CustomersController < ApplicationController
     render json: @customer
   end
 
-  # POST /customers/:id
+  # POST /customers
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
@@ -51,6 +51,6 @@ class Api::V1::CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :license_number, :phone_number, :email)
+    params.permit(:first_name, :last_name, :license_number, :phone_number, :email)
   end
 end

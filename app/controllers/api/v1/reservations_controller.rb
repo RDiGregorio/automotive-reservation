@@ -3,8 +3,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations
   def index
-    #TODO: this probably shouldn't be a child of the vehicle
-    @reservations = Reservation.all
+    @reservations = Reservation.where(vehicle_id: params[:vehicle_id])
     render json: @reservations
   end
 
@@ -14,7 +13,7 @@ class Api::V1::ReservationsController < ApplicationController
     render json: @reservation
   end
 
-  # POST /reservations/:id
+  # POST /reservations
   def create
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
@@ -49,7 +48,7 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:vehicle_id, :date, :time, :description, :status)
+    params.permit(:vehicle_id, :date, :time, :description, :status)
   end
 
   def find_reservation

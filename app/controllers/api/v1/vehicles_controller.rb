@@ -13,7 +13,7 @@ class Api::V1::VehiclesController < ApplicationController
     render json: @vehicle
   end
 
-  # POST /vehicles/:id
+  # POST /vehicles
   def create
     @vehicle = Vehicle.new(vehicle_params)
     if @vehicle.save
@@ -48,7 +48,7 @@ class Api::V1::VehiclesController < ApplicationController
   private
 
   def vehicle_params
-    params.require(:vehicle).permit(:customer_id, :make, :model, :color, :registration_number)
+    params.permit(:customer_id, :make, :model, :color, :registration_number)
   end
 
   def find_vehicle

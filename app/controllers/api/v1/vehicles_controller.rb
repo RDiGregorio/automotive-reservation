@@ -21,7 +21,7 @@ class Api::V1::VehiclesController < ApplicationController
     if vehicle.save
       render json: vehicle
     else
-      render json: { error: 'Failed to create vehicle.' }, status: 400
+      render json: { error: 'Failed to create vehicle. Make sure the registration number is unique and no required fields are missing.' }, status: 400
     end
   end
 

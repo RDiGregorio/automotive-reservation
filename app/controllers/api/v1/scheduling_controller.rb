@@ -1,4 +1,40 @@
 class Api::V1::SchedulingController < ApplicationController
+  # GET /scheduling
+  def index
+    # Returns the reservations for a given customer.
+
+    if params[:license_number]
+      customers = Customer.where(license_number: params[:license_number])
+    elsif params[:first_name] and params[:last_name]
+      customers = Customer.where(first_name: params[:first_name], last_name: params[:last_name])
+
+      if customers.empty?
+        render json: { error: 'Failed to find customer.' }, status: 400
+        return
+      end
+
+      # It's possible for 2 customers to have the same first and last name. If possible we try to narrow it down to
+      # customers that have an open reservation.
+
+      customers = customers.where { |customer|
+        customer.vehicles.any? { |vehicle|
+          vehicle.reservations.any? { |reservation|
+            reservation.status.capitalize != "CLOSED"
+          }
+        } }
+
+      if customers.size > 1
+        render json: { error: 'Found multiple customers. Please search by license number.' }, status: 400
+        return
+      end
+    else
+      render json: { error: 'Failed to find customer.' }, status: 400
+      return
+    end
+
+    render json: customers.flat_map { |customer| customer.vehicles.flat_map { |vehicle| vehicle.reservations } }
+  end
+
   # POST /scheduling
   def create
     customer = Customer.find_by(license_number: params[:license_number]) || Customer.new(customer_params)

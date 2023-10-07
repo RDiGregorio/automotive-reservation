@@ -18,7 +18,7 @@ class Api::V1::CustomersControllerTest < ActionDispatch::IntegrationTest
     post "http://127.0.0.1:3000/api/v1/customers/", params: {first_name: "a", last_name: "b", license_number: "c"}
     assert_equal json_response["first_name"], "a"
     post "http://127.0.0.1:3000/api/v1/customers/", params: {first_name: "a", last_name: "b", license_number: "c"}
-    assert_equal json_response["error"], "Failed to create customer."
+    assert json_response["error"].starts_with? "Failed to create customer."
   end
 
   test "customer can be updated" do

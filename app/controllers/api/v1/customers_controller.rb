@@ -28,7 +28,8 @@ class Api::V1::CustomersController < ApplicationController
     if customer.save
       render json: customer
     else
-      render json: { error: 'Failed to create customer.' }, status: 400
+      # This is usually caused by a duplicate license number.
+      render json: { error: 'Failed to create customer. Make sure the license number is unique and no required fields are missing.' }, status: 400
     end
   end
 

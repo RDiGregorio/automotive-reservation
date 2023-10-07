@@ -20,7 +20,7 @@ class Api::V1::VehiclesControllerTest < ActionDispatch::IntegrationTest
     id = json_response["id"]
     post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/", params: {make: "Nissan", model: "Sentra", color: "White", registration_number: "9KDB90"}
     post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/", params: {make: "X", model: "Y", color: "Z", registration_number: "9KDB90"}
-    assert_equal json_response["error"], "Failed to create vehicle."
+    assert json_response["error"].starts_with? "Failed to create vehicle."
   end
 
   test "vehicles can be updated" do

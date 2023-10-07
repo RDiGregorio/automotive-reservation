@@ -6,6 +6,8 @@ information.
 
 **It is meant to be run in a secure environment, such as on a VPN, as no security has been implemented.**
 
+TODO: handle time collisions
+
 # USAGE
 
 The endpoints use REST. Example usage can be seen in the controller tests:
@@ -13,6 +15,9 @@ The endpoints use REST. Example usage can be seen in the controller tests:
 * test\controllers\api\v1\reservations_controller_test.rb
 * controllers\api\v1\scheduling_controller_test.rb
 * controllers\api\v1\vehicles_controller_test.rb
+
+The main use case, taking service reservations over the phone in a single step, can be seen in
+controllers\api\v1\scheduling_controller_test.rb.
 
 # REQUIREMENTS
 

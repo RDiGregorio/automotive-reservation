@@ -1,10 +1,6 @@
 class Api::V1::SchedulingController < ApplicationController
   # POST /scheduling
   def create
-    # todo: should i worry about time collisions? endpoint security?
-    # todo: need to write unit tests that actually use REST
-    # todo: need to update the README
-
     customer = Customer.find_by(license_number: params[:license_number]) || Customer.new(customer_params)
 
     unless customer.save

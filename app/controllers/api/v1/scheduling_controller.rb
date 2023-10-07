@@ -2,18 +2,20 @@ class Api::V1::SchedulingController < ApplicationController
   # POST /scheduling
   def create
     # todo: should i worry about time collisions? endpoint security?
+    # todo: need to write unit tests that actually use REST
+    # todo: need to update the README
 
     customer = Customer.find_by(license_number: params[:license_number]) || Customer.new(customer_params)
 
     unless customer.save
-      render json: { error: 'Failed to create or update customer.' }, status: 400
+      render json: { error: 'Failed to find or create customer.' }, status: 400
       return
     end
 
     vehicle = Vehicle.find_by(registration_number: params[:registration_number]) || Vehicle.new(vehicle_params(customer.id))
 
     unless vehicle.save
-      render json: { error: 'Failed to create or update vehicle.' }, status: 400
+      render json: { error: 'Failed to find or create vehicle.' }, status: 400
       return
     end
 

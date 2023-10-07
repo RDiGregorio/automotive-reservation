@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_06_163058) do
     t.bigint "vehicle_id", null: false
     t.date "date"
     t.time "time"
+    t.integer "duration_hours"
     t.text "description"
     t.string "status"
     t.datetime "created_at", null: false

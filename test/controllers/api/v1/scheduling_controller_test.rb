@@ -10,8 +10,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -19,13 +19,15 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     assert_equal json_response["date"], "2023-10-06"
     assert_equal Time.parse(json_response["time"]).strftime("%R"), "10:30"
     assert_equal json_response["description"], "broken engine"
     assert_equal json_response["status"], "Pending"
+    assert_equal json_response["duration_hours"], 1
   end
 
   test "making multiple reservations does not duplicate customers or vehicles" do
@@ -35,8 +37,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -44,15 +46,16 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     post "http://127.0.0.1:3000/api/v1/scheduling", params: {
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -60,7 +63,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-07",
       "time": "10:30:00",
       "description": "broken window",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     # Verify 2 reservations are made.
@@ -89,8 +93,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -98,7 +102,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     # An earlier completed job that should no longer be found.
@@ -107,8 +112,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -116,7 +121,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2022-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Closed"
+      "status": "Closed",
+      "duration_hours": 1
     }
 
     get "http://127.0.0.1:3000/api/v1/scheduling", params: { "license_number": "S54318719" }
@@ -131,8 +137,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -140,7 +146,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     # A customer with the same name, but a completed job. The license number and registration number are different. They
@@ -150,8 +157,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318720",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB91",
       "make": "Nissan",
       "model": "Sentra",
@@ -159,7 +166,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2022-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Closed"
+      "status": "Closed",
+      "duration_hours": 1
     }
 
     get "http://127.0.0.1:3000/api/v1/scheduling", params: { "first_name": "Alice", "last_name": "Liddell" }
@@ -174,8 +182,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318719",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB90",
       "make": "Nissan",
       "model": "Sentra",
@@ -183,7 +191,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     # A customer with the same name. The license number and registration number are different. They have the same name,
@@ -193,8 +202,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "first_name": "Alice",
       "last_name": "Liddell",
       "license_number": "S54318720",
-      phone_number: '774-867-5309',
-      email: 'alice.liddell@gmail.com',
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
       "registration_number": "9KDB91",
       "make": "Nissan",
       "model": "Sentra",
@@ -202,7 +211,8 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "date": "2023-10-06",
       "time": "10:30:00",
       "description": "broken engine",
-      "status": "Pending"
+      "status": "Pending",
+      "duration_hours": 1
     }
 
     # A reason for failure and a possible resolution is given.

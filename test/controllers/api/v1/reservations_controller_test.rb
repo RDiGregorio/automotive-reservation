@@ -10,7 +10,7 @@ class Api::V1::ReservationsControllerTest < ActionDispatch::IntegrationTest
     id = json_response["id"]
     post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/", params: { make: "Nissan", model: "Sentra", color: "White", registration_number: "9KDB90" }
     vehicle_id = json_response["id"]
-    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready" }
+    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready", duration_hours: 1 }
     assert_equal DateTime.parse(json_response["date"]), DateTime.parse("2023-10-06")
     assert_equal Time.parse(json_response["time"]).strftime("%R"), "10:30"
     assert_equal json_response["description"], "broken engine"
@@ -22,9 +22,9 @@ class Api::V1::ReservationsControllerTest < ActionDispatch::IntegrationTest
     id = json_response["id"]
     post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/", params: { make: "Nissan", model: "Sentra", color: "White", registration_number: "9KDB90" }
     vehicle_id = json_response["id"]
-    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready" }
+    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready", duration_hours: 1 }
     reservation_id = json_response["id"]
-    put "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations/#{reservation_id}", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Done" }
+    put "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations/#{reservation_id}", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Done", duration_hours: 1 }
     assert_equal json_response["message"], "Reservation updated."
     get "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations/#{reservation_id}"
     assert_equal json_response["status"], "Done"
@@ -35,7 +35,7 @@ class Api::V1::ReservationsControllerTest < ActionDispatch::IntegrationTest
     id = json_response["id"]
     post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/", params: { make: "Nissan", model: "Sentra", color: "White", registration_number: "9KDB90" }
     vehicle_id = json_response["id"]
-    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready" }
+    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready", duration_hours: 1 }
     reservation_id = json_response["id"]
     delete "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations/#{reservation_id}"
     assert_equal json_response["message"], "Reservation deleted."

@@ -79,6 +79,6 @@ class Api::V1::SchedulingController < ApplicationController
 
   def reservation_params(vehicle_id)
     params[:vehicle_id] = vehicle_id
-    params.permit(:vehicle_id, :date, :time, :description, :status)
+    params.permit(:vehicle_id, :date, :time, :description, :status, :duration_hours)
   end
 end

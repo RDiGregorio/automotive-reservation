@@ -50,6 +50,6 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.permit(:vehicle_id, :date, :time, :description, :status)
+    params.permit(:vehicle_id, :date, :time, :description, :status, :duration_hours)
   end
 end

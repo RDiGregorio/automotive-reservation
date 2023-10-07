@@ -6,7 +6,7 @@ class CreateReservations < ActiveRecord::Migration[7.1]
       t.time :time, null: false
       t.text :description, null: false
       t.string :status, null: false
-
+      t.integer :duration_hours, null: false
       t.timestamps
     end
   end

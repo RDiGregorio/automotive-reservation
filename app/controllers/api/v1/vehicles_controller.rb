@@ -32,7 +32,7 @@ class Api::V1::VehiclesController < ApplicationController
     end
   end
 
-  # POST /vehicles
+  # DELETE /vehicles
   def destroy
     vehicle = Vehicle.find(params[:id])
     if vehicle

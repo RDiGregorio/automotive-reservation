@@ -32,7 +32,7 @@ class Api::V1::ReservationsController < ApplicationController
     end
   end
 
-  # POST /reservations
+  # DELETE /reservations
   def destroy
     reservation = Reservation.find(params[:id])
     if reservation

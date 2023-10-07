@@ -7,8 +7,12 @@ class Api::V1::ReservationsController < ApplicationController
 
   # GET /reservations/:id
   def show
-    reservation = Reservation.find(params[:id])
-    render json: reservation
+    reservation = Reservation.find_by(id: params[:id])
+    if reservation
+      render json: reservation
+    else
+      render json: { error: 'Failed to find reservation.' }, status: 400
+    end
   end
 
   # POST /reservations
@@ -23,7 +27,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # PUT /reservations/:id
   def update
-    reservation = Reservation.find(params[:id])
+    reservation = Reservation.find_by(id: params[:id])
     if reservation
       reservation.update(reservation_params)
       render json: { message: 'Reservation updated.' }, status: 200
@@ -34,7 +38,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /reservations
   def destroy
-    reservation = Reservation.find(params[:id])
+    reservation = Reservation.find_by(id: params[:id])
     if reservation
       reservation.destroy
       render json: { message: 'Reservation deleted.' }, status: 200

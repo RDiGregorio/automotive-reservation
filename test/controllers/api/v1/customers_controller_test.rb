@@ -40,4 +40,16 @@ class Api::V1::CustomersControllerTest < ActionDispatch::IntegrationTest
     get "http://127.0.0.1:3000/api/v1/customers/#{id}"
     assert_equal json_response["error"], "Failed to find customer."
   end
+
+  test "customer can be found by name" do
+    post "http://127.0.0.1:3000/api/v1/customers/", params: {first_name: "a", last_name: "b", license_number: "c"}
+    get "http://127.0.0.1:3000/api/v1/customers/", params: {first_name: "a", last_name: "b"}
+    assert_equal json_response[0]["license_number"], "c"
+  end
+
+  test "customer can be found by license number" do
+    post "http://127.0.0.1:3000/api/v1/customers/", params: {first_name: "a", last_name: "b", license_number: "c"}
+    get "http://127.0.0.1:3000/api/v1/customers/", params: {license_number: "c"}
+    assert_equal json_response[0]["first_name"], "a"
+  end
 end

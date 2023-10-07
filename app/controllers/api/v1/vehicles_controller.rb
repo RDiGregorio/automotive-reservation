@@ -7,8 +7,12 @@ class Api::V1::VehiclesController < ApplicationController
 
   # GET /vehicles/:id
   def show
-    vehicle = Vehicle.find(params[:id])
-    render json: vehicle
+    vehicle = Vehicle.find_by(id: params[:id])
+    if vehicle
+      render json: vehicle
+    else
+      render json: { error: 'Failed to find vehicle.' }, status: 400
+    end
   end
 
   # POST /vehicles
@@ -23,7 +27,7 @@ class Api::V1::VehiclesController < ApplicationController
 
   # PUT /vehicles/:id
   def update
-    vehicle = Vehicle.find(params[:id])
+    vehicle = Vehicle.find_by(id: params[:id])
     if vehicle
       vehicle.update(vehicle_params)
       render json: { message: 'Vehicle updated.' }, status: 200
@@ -34,7 +38,7 @@ class Api::V1::VehiclesController < ApplicationController
 
   # DELETE /vehicles
   def destroy
-    vehicle = Vehicle.find(params[:id])
+    vehicle = Vehicle.find_by(id: params[:id])
     if vehicle
       vehicle.destroy
       render json: { message: 'Vehicle deleted.' }, status: 200

@@ -1,7 +1,9 @@
 class Api::V1::CustomersController < ApplicationController
   # GET /customers
   def index
-    if params[:first_name] and params[:last_name]
+    if params[:license_number]
+      customers = Customer.where(license_number: params[:license_number])
+    elsif params[:first_name] and params[:last_name]
       customers = Customer.where(first_name: params[:first_name], last_name: params[:last_name])
     else
       customers = Customer.all

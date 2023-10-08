@@ -52,4 +52,16 @@ class Api::V1::ReservationsControllerTest < ActionDispatch::IntegrationTest
     post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "12:30:00", description: "broken engine", status: "Ready", duration_hours: 2 }
     assert_equal json_response["error"], "Failed to create reservation because of a scheduling conflict."
   end
+
+  test "updates can not cause open reservations to conflict" do
+    post "http://127.0.0.1:3000/api/v1/customers/", params: { first_name: "a", last_name: "b", license_number: "c" }
+    id = json_response["id"]
+    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/", params: { make: "Nissan", model: "Sentra", color: "White", registration_number: "9KDB90" }
+    vehicle_id = json_response["id"]
+    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "12:30:00", description: "broken engine", status: "Ready", duration_hours: 2 }
+    post "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Ready", duration_hours: 1 }
+    reservation_id = json_response["id"]
+    put "http://127.0.0.1:3000/api/v1/customers/#{id}/vehicles/#{vehicle_id}/reservations/#{reservation_id}", params: { date: "2023-10-06", time: "10:30:00", description: "broken engine", status: "Done", duration_hours: 3 }
+    assert_equal json_response["error"], "Failed to update reservation because of a scheduling conflict."
+  end
 end

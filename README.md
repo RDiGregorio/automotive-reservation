@@ -4,7 +4,10 @@ This application is meant for St Charles Automotive. It provides a set of endpoi
 reservations over the phone in a single step, as well endpoints for updating the customer, vehicle, and reservation
 information. Reservations are not allowed to overlap.
 
-**It is meant to be run in a secure environment, such as on a VPN, as no security has been implemented.**
+I considered preventing reservations for dates that have already passed, but quite often information can be entered into
+a computer after the fact and back dated, so I'm being cautiously optimistic about that not being a requirement.
+
+**This application is meant to be run in a secure environment, such as on a VPN, as no security has been implemented.**
 
 # USAGE
 

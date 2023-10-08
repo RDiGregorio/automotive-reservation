@@ -24,9 +24,6 @@ class Api::V1::ReservationsController < ApplicationController
       return
     end
 
-    # puts reservation.start_date_time
-    # puts reservation.end_date_time
-
     if reservation.save
       render json: reservation
     else
@@ -37,11 +34,14 @@ class Api::V1::ReservationsController < ApplicationController
   # PUT /reservations/:id
   def update
     reservation = Reservation.find_by(id: params[:id])
+    reservation.assign_attributes(reservation_params)
 
-    # TODO prevent updating reservations and causing a conflict
+    if open_reservations.any? { |open_reservation| (open_reservation.id != reservation.id) && reservation.conflicts_with(open_reservation) }
+      render json: { error: 'Failed to update reservation because of a scheduling conflict.' }, status: 400
+      return
+    end
 
-    if reservation
-      reservation.update(reservation_params)
+    if reservation.save
       render json: { message: 'Reservation updated.' }, status: 200
     else
       render json: { error: 'Failed to update reservation.' }, status: 400

@@ -220,4 +220,47 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
     get "http://127.0.0.1:3000/api/v1/scheduling", params: { "first_name": "Alice", "last_name": "Liddell" }
     assert_equal json_response["error"], "Found multiple customers. Please search by license number."
   end
+
+  test "open reservations can not conflict" do
+    post "http://127.0.0.1:3000/api/v1/scheduling", params: {
+      "first_name": "Alice",
+      "last_name": "Liddell",
+      "license_number": "S54318719",
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
+      "registration_number": "9KDB90",
+      "make": "Nissan",
+      "model": "Sentra",
+      "color": "White",
+      "date": "2023-10-06",
+      "time": "10:30:00",
+      "description": "broken engine",
+      "status": "Pending",
+      "duration_hours": 3
+    }
+
+    # A customer with the same name. The license number and registration number are different. They have the same name,
+    # phone number, and email because they are mother and daughter and decided to share accounts.
+
+    post "http://127.0.0.1:3000/api/v1/scheduling", params: {
+      "first_name": "Alice",
+      "last_name": "Liddell",
+      "license_number": "S54318720",
+      "phone_number": '774-867-5309',
+      "email": 'alice.liddell@gmail.com',
+      "registration_number": "9KDB91",
+      "make": "Nissan",
+      "model": "Sentra",
+      "color": "White",
+      "date": "2023-10-06",
+      "time": "12:30:00",
+      "description": "broken engine",
+      "status": "Pending",
+      "duration_hours": 2
+    }
+
+    # A reason for failure is given.
+
+    assert_equal json_response["error"], "Failed to create reservation because of a scheduling conflict."
+  end
 end

@@ -37,6 +37,9 @@ class Api::V1::ReservationsController < ApplicationController
   # PUT /reservations/:id
   def update
     reservation = Reservation.find_by(id: params[:id])
+
+    # TODO prevent updating reservations and causing a conflict
+
     if reservation
       reservation.update(reservation_params)
       render json: { message: 'Reservation updated.' }, status: 200

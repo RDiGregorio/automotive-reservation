@@ -67,7 +67,7 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "duration_hours": 1
     }
 
-    # Verify 2 reservations are made.
+    # Verify 2 reservations are made. The reservations are on different dates so there's no conflict.
 
     get "http://127.0.0.1:3000/api/v1/scheduling", params: { "license_number": "S54318719" }
     assert_equal json_response.size, 2

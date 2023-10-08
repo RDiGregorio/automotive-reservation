@@ -2,14 +2,7 @@
 
 This application is meant for St Charles Automotive. It provides a set of endpoints that allow taking service
 reservations over the phone in a single step, as well endpoints for updating the customer, vehicle, and reservation
-information.
-
-Overbooking isn't a problem. Customers can drop of their cars at any time and the mechanics will complete the job as
-soon as possible. Sometimes that means a customer's car is waiting for a while before being worked on, but that is
-normal practice in the industry.
-
-Reservations are allowed to be added in the past because it is sometimes the case where the internet is down and a
-reservation is needed to be entered when it comes back online. In such a case, a reservation may be back dated.
+information. Reservations are not allowed to overlap.
 
 **It is meant to be run in a secure environment, such as on a VPN, as no security has been implemented.**
 

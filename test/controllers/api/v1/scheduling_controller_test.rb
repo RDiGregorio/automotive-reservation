@@ -209,7 +209,7 @@ class Api::V1::SchedulingControllerTest < ActionDispatch::IntegrationTest
       "model": "Sentra",
       "color": "White",
       "date": "2023-10-06",
-      "time": "10:30:00",
+      "time": "11:30:00",
       "description": "broken engine",
       "status": "Pending",
       "duration_hours": 1

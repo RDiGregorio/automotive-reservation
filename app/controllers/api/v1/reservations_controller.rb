@@ -18,6 +18,15 @@ class Api::V1::ReservationsController < ApplicationController
   # POST /reservations
   def create
     reservation = Reservation.new(reservation_params)
+
+    if open_reservations.any? { |open_reservation| reservation.conflicts_with open_reservation }
+      render json: { error: 'Failed to create reservation because of a scheduling conflict.' }, status: 400
+      return
+    end
+
+    # puts reservation.start_date_time
+    # puts reservation.end_date_time
+
     if reservation.save
       render json: reservation
     else
@@ -51,5 +60,9 @@ class Api::V1::ReservationsController < ApplicationController
 
   def reservation_params
     params.permit(:vehicle_id, :date, :time, :description, :status, :duration_hours)
+  end
+
+  def open_reservations
+    Reservation.where.not(status: 'Closed').to_a
   end
 end

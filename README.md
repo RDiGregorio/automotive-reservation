@@ -2,7 +2,8 @@
 
 This application is meant for St Charles Automotive. It provides a set of endpoints that allow taking service
 reservations over the phone in a single step, as well endpoints for updating the customer, vehicle, and reservation
-information. Reservations are not allowed to overlap.
+information. Reservations are not allowed to overlap (this requirement was implied by customers needing to **secure** a
+time slot).
 
 I considered preventing reservations for dates that have already passed, but quite often information can be entered into
 a computer after the fact and back dated, so I'm being cautiously optimistic about that not being a requirement.

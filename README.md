@@ -27,7 +27,8 @@ This application requires a Ruby (version 3.2.2), Ruby Gems (version 3.4.20), an
 # SETUP
 
 To setup the application:
-1. Set a username and password for each environment in config/database.yml.
+1. Set a username and password for each environment in config/database.yml. Additional changes in config/database.yml
+may be needed if you changed any PostgreSQL configuration defaults, such as the port.
 2. Run `bundle install`.
 3. Run `rake db:setup`.
 4. Run `rake db:migrate`.
@@ -39,4 +40,4 @@ To launch the application, run `rails s`. It will listen at http://127.0.0.1:300
 # TESTING
 
 Run `rails test` to run the unit and integration tests for this application. Tests are stored in the test directory. For
-example, test/controllers/api/v1/scheduling_controller_test.rb. There are both model and controller tests.
+example, test/controllers/api/v1/scheduling_controller_test.rb. **There are both model and controller tests.**
